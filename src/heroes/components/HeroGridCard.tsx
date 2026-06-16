@@ -4,12 +4,20 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Brain, Eye, Gauge, Heart, Shield, Zap } from "lucide-react"
 import type { Hero } from "../types/hero.interface"
+import { useNavigate } from "react-router"
 
 interface Props {
     hero: Hero;
 }
 
 export const HeroGridCard = ({ hero }: Props) => {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/heroes/${hero.slug}`);
+    }
+
     return (
         <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50">
             <div className="relative h-64">
@@ -17,6 +25,7 @@ export const HeroGridCard = ({ hero }: Props) => {
                     src={hero.image}
                     alt={hero.name}
                     className="object-cover transition-all duration-500 group-hover:scale-110 absolute top-[-40px] w-full h-[410px]"
+                    onClick={handleClick}
                 />
 
                 {/* Status indicator */}
@@ -108,7 +117,7 @@ export const HeroGridCard = ({ hero }: Props) => {
                     <div className="flex flex-wrap gap-1">
 
                         {hero.powers.slice(0, 3).map((power) => (
-                            <Badge variant="outline" className="text-xs">
+                            <Badge key={power} variant="outline" className="text-xs">
                                 {power}
                             </Badge>
                         ))}

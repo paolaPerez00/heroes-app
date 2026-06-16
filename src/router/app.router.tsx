@@ -4,7 +4,7 @@ import { HeroesLayout } from '@/heroes/layouts/HeroesLayout';
 import { HeroPage } from '@/heroes/pages/hero/HeroPage';
 import { HomePage } from '@/heroes/pages/home/HomePage';
 import { SearchPage } from '@/heroes/pages/search/SearchPage';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 
 export const router = createBrowserRouter([
     {
@@ -16,12 +16,16 @@ export const router = createBrowserRouter([
                 element: <HomePage />
             },
             {
-                path: '/heroes/1',
+                path: '/heroes/:idSlug',
                 element: <HeroPage />
             },
             {
                 path: '/search',
                 element: <SearchPage />
+            },
+            {
+                path: '*',
+                element: <Navigate to="/" />
             },
         ]
     },
