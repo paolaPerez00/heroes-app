@@ -26,7 +26,7 @@ export const HomePage = () => {
     }, [activeTab])
 
     const { data: heroesResponse } = useQuery({
-        queryKey: ['heroes'],
+        queryKey: ['heroes', { page, limit }],
         queryFn: () => getHeroesByPageAction(+page, +limit),
         staleTime: 1000 * 60 * 5
     })
@@ -100,7 +100,7 @@ export const HomePage = () => {
             {/* <HeroGrid /> */}
 
             {/* Pagination */}
-            <CustomPagination totalPages={heroesResponse?.pages} />
+            <CustomPagination totalPages={heroesResponse?.pages ?? 1} />
         </>
     )
 }
