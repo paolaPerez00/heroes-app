@@ -19,13 +19,14 @@ export const HomePage = () => {
     const activeTab = searchParams.get('tab') ?? 'all';
     const page = searchParams.get('page') ?? '1';
     const limit = searchParams.get('limit') ?? '6';
+    const category = searchParams.get('category') ?? 'all';
 
     const selectedTab = useMemo(() => {
         const validTabs = ['all', 'favorites', 'heroes', 'villains']
         return validTabs.includes(activeTab) ? activeTab : 'all';
     }, [activeTab])
 
-    const { data: heroesResponse } = usePaginateHero(+page, +limit);
+    const { data: heroesResponse } = usePaginateHero(+page, +limit, category);
     const { data: summary } = useHeroSummary();
 
     return (
@@ -48,6 +49,8 @@ export const HomePage = () => {
                         value="all"
                         onClick={() => setSearchParams((prev) => {
                             prev.set('tab', 'all');
+                            prev.set('category', 'all');
+                            prev.set('page', '1');
                             return prev;
                         })}
                     >All Characters ({summary?.totalHeroes})</TabsTrigger>
@@ -64,12 +67,16 @@ export const HomePage = () => {
                     <TabsTrigger value="heroes"
                         onClick={() => setSearchParams((prev) => {
                             prev.set('tab', 'heroes');
+                            prev.set('category', 'hero');
+                            prev.set('page', '1');
                             return prev;
                         })}
                     >Heroes ({summary?.heroCount})</TabsTrigger>
                     <TabsTrigger value="villains"
                         onClick={() => setSearchParams((prev) => {
                             prev.set('tab', 'villains');
+                            prev.set('category', 'villain');
+                            prev.set('page', '1');
                             return prev;
                         })}
                     >Villains ({summary?.villainCount})</TabsTrigger>
@@ -83,11 +90,11 @@ export const HomePage = () => {
                     <h1>Favoritos</h1>
                 </TabsContent>
                 <TabsContent value="heroes">
-                    <HeroGrid />
+                    <HeroGrid heroes={heroesResponse?.heroes} />
                     <h1>Héroes</h1>
                 </TabsContent>
                 <TabsContent value="villains">
-                    <HeroGrid />
+                    <HeroGrid heroes={heroesResponse?.heroes} />
                     <h1>Villanos</h1>
                 </TabsContent>
             </Tabs>
