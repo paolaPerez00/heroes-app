@@ -8,9 +8,10 @@ import { HeroGrid } from "@/heroes/components/HeroGrid"
 import { CustomPagination } from "@/components/custom/CustomPagination"
 import { CustomBreadcrumb } from "@/components/custom/CustomBreadcrumb"
 import { useSearchParams } from "react-router"
-import { useMemo } from "react"
+import { use, useMemo } from "react"
 import { useHeroSummary } from "@/heroes/hooks/useHeroSummary"
 import { usePaginateHero } from "@/heroes/hooks/usePaginateHero"
+import { FavoriteHeroContext } from "@/heroes/context/FavoriteHeroContext"
 
 export const HomePage = () => {
 
@@ -28,6 +29,7 @@ export const HomePage = () => {
 
     const { data: heroesResponse } = usePaginateHero(+page, +limit, category);
     const { data: summary } = useHeroSummary();
+    const { favoriteCount, favorites } = use(FavoriteHeroContext);
 
     return (
         <>
@@ -62,7 +64,7 @@ export const HomePage = () => {
                         })}
                     >
                         <Heart className="h-4 w-4" />
-                        Favorites (3)
+                        Favorites ({favoriteCount})
                     </TabsTrigger>
                     <TabsTrigger value="heroes"
                         onClick={() => setSearchParams((prev) => {
@@ -86,7 +88,7 @@ export const HomePage = () => {
                     <h1>Todos los personajes</h1>
                 </TabsContent>
                 <TabsContent value="favorites">
-                    <HeroGrid />
+                    <HeroGrid heroes={favorites} />
                     <h1>Favoritos</h1>
                 </TabsContent>
                 <TabsContent value="heroes">
@@ -99,11 +101,12 @@ export const HomePage = () => {
                 </TabsContent>
             </Tabs>
 
-            {/* Character Grid */}
-            {/* <HeroGrid /> */}
-
             {/* Pagination */}
-            <CustomPagination totalPages={heroesResponse?.pages ?? 1} />
+            {
+                selectedTab !== 'favorires' && (
+                    <CustomPagination totalPages={heroesResponse?.pages ?? 1} />
+                )
+            }
         </>
     )
 }
