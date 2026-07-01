@@ -17,6 +17,10 @@ export const HeroStats = () => {
     const { data: summary } = useHeroSummary();
     const { favoriteCount, } = use(FavoriteHeroContext);
 
+    if (!summary) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <Card>
@@ -40,8 +44,8 @@ export const HeroStats = () => {
                 title="Favoritos"
                 icon={<Heart className="h-4 w-4 text-muted-foreground" />}
             >
-                <div className="text-2xl font-bold text-red-600">{favoriteCount}</div>
-                <p className="text-xs text-muted-foreground">
+                <div className="text-2xl font-bold text-red-600" data-testid="favorite-count">{favoriteCount}</div>
+                <p className="text-xs text-muted-foreground" data-testid="favorite-percentage">
                     {(favoriteCount / summary?.totalHeroes) * 100}% of total
                 </p>
             </HeroStatCard>

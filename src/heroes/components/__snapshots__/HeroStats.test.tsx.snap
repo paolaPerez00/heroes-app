@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HeroStats > should render HeroStast with moc information 1`] = `
+<div>
+  <div>
+    Loading...
+  </div>
+</div>
+`;
+
+exports[`HeroStats > should render component with default values 1`] = `
+<div>
+  <div>
+    Loading...
+  </div>
+</div>
+`;
