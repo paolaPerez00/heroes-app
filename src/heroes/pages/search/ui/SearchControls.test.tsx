@@ -58,7 +58,7 @@ describe('SearchControls', () => {
         const accordion = screen.getByTestId('accordion')
         const accordionItem = accordion.querySelector('div');
 
-        expect(accordionItem.getAttribute('data-state')).toBe('open')
+        expect(accordionItem?.getAttribute('data-state')).toBe('open')
     })
 
     test('should accordion be closed when active-accordion param is not set ', () => {
@@ -66,7 +66,7 @@ describe('SearchControls', () => {
         const accordion = screen.getByTestId('accordion')
         const accordionItem = accordion.querySelector('div');
 
-        expect(accordionItem.getAttribute('data-state')).toBe('closed')
+        expect(accordionItem?.getAttribute('data-state')).toBe('closed')
     })
 
 })
